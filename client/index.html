@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<body>
+  <h2>Login</h2>
+  <input id="user">
+  <input id="pass" type="password">
+  <button onclick="login()">Login</button>
+  <p id="msg"></p>
+
+<script>
+function escapeHTML(str) {
+  return str.replace(/[&<>"']/g, m =>
+    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])
+  );
+}
+
+function login() {
+  fetch("http://localhost:3000/auth/login", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      username: escapeHTML(user.value),
+      password: pass.value
+    })
+  })
+  .then(r => r.json())
+  .then(d => msg.innerText = JSON.stringify(d));
+}
+</script>
+</body>
+</html>
