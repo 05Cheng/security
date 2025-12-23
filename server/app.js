@@ -1,21 +1,34 @@
 import express from "express";
-import dotenv from "dotenv";
+import cors from "cors";
+import "dotenv/config";
 import authRoutes from "./routes/auth.js";
-import adminRoutes from "./routes/admin.js";
-
-dotenv.config();
 
 const app = express();
+
+
+app.use(
+  cors({
+    origin: "http://127.0.0.1:5500",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+
 app.use(express.json());
 
-app.use("/auth", authRoutes);
-app.use("/admin", adminRoutes);
 
-const PORT = 3002;
+app.get("/", (req, res) => {
+  res.send("SERVER OK");
+});
+
+
+app.use("/auth", authRoutes);
+
+
+
+const PORT = process.env.PORT || 3002;
 
 app.listen(PORT, () => {
   console.log("=================================");
-  console.log("Server started successfully");
-  console.log(` Running on http://localhost:${PORT}`);
-  console.log("=================================");
-});
+  cons
