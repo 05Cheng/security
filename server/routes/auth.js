@@ -49,4 +49,20 @@ router.post("/login", async (req, res) => {
 
   const match = await bcrypt.compare(password, user.passwordHash);
   if (!match) {
-    return res.status(401).json({ mess
+    return res.status(401).json({ message: "Invalid credentials" });
+  }
+
+
+  const token = jwt.sign(
+    { username: user.username, role: user.role },
+    process.env.JWT_SECRET || "dev-secret",
+    { expiresIn: "1h" }
+  );
+
+  res.json({
+    message: "Login success",
+    token
+  });
+});
+
+export default router;

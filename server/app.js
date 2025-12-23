@@ -31,4 +31,8 @@ const PORT = process.env.PORT || 3002;
 
 app.listen(PORT, () => {
   console.log("=================================");
-  cons
+  console.log("Server started successfully");
+  console.log(`Running on http://localhost:${PORT}`);
+  console.log("=================================");
+});
+
